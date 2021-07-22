@@ -1,0 +1,12 @@
+{
+  "name": "backend-challenge",
+  "version": "1.0.0",
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "koa": "^2.13.1",
+    "koa-router": "^10.0.0"
+  },
+  "dependencies": {
+    "koa-mongo": "^1.9.3"
+  }
+}
