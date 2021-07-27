@@ -7,13 +7,14 @@ const InstancesController = require('../controllers/InstancesController')
 
 
 router.get('/', async (ctx, next) => {
+  console.log('GET / called ')
   ctx.body = 'Hello router'
 })
 
 
 router.post('/:group/:id', async (ctx) => {
   const { group, id } = ctx.request.params
-  console.log('/:group/:id route called: ', group, id)
+  console.log('POST /:group/:id route called: ', group, id)
 
   const requestBody = ctx.request.body
   let meta = {}
@@ -23,6 +24,16 @@ router.post('/:group/:id', async (ctx) => {
   console.log('instance: ', instance)
   ctx.status = 200
   ctx.body = instance
+})
+
+
+router.delete('/:group/:id', async (ctx) => {
+  const { group, id } = ctx.request.params
+  console.log('DELETE /:group/:id route called: ', group, id)
+
+  await InstancesController.removeInstance({ instanceId: id, ctx })
+
+  ctx.status = 200
 })
 
 
@@ -36,5 +47,7 @@ router.post('/:group', async (ctx, next) => {
 })
 
 
-module.exports = router
 
+
+
+module.exports = router

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "koa-bodyparser": "^4.3.0",
-    "koa-mongo": "^1.9.3"
+    "koa-mongo": "^1.9.3",
+    "uuid4": "^2.0.2"
   }
 }
