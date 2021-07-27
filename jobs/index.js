@@ -16,7 +16,7 @@ const job = new CronJob(
       const unixtimeNow = new Date().valueOf()
       const unixtimeToCheck = unixtimeNow - (1000 * process.env.INSTANCE_AGED_AFTER_SECONDS)
 
-      // await db.collection('instances').deleteMany({ updatedAt: { $lte: unixtimeToCheck }})
+      await db.collection('instances').deleteMany({ updatedAt: { $lte: unixtimeToCheck }})
 
       client.close()
     })
