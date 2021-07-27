@@ -6,9 +6,24 @@ const InstancesController = require('../controllers/InstancesController')
 
 
 
-router.get('/', async (ctx, next) => {
+router.get('/', async (ctx) => {
   console.log('GET / called ')
-  ctx.body = 'Hello router'
+
+  const groups = await GroupsController.findAllGroups({ ctx })
+
+  ctx.body = groups
+  ctx.status = 200
+})
+
+
+router.get('/:group', async (ctx) => {
+  const { group } = ctx.request.params
+  console.log('GET /:group called ', group)
+
+  const instances = await InstancesController.findInstancesByGroupName({ groupName: group, ctx })
+
+  ctx.body = instances
+  ctx.status = 200
 })
 
 
@@ -21,9 +36,9 @@ router.post('/:group/:id', async (ctx) => {
   if (requestBody.meta) meta = requestBody.meta
 
   const instance = await InstancesController.upsertInstance({ groupName: group, instanceId: id, meta, ctx })
-  console.log('instance: ', instance)
-  ctx.status = 200
+
   ctx.body = instance
+  ctx.status = 200
 })
 
 
@@ -38,12 +53,12 @@ router.delete('/:group/:id', async (ctx) => {
 
 
 
-router.post('/:group', async (ctx, next) => {
+router.post('/:group', async (ctx) => {
   const { group } = ctx.request.params
   console.log(`/:group route called: ${group}`)
 
   await GroupsController.upsertGroup({ groupName: group, ctx })
-  ctx.body = {}
+  ctx.body = `Group with name ${group} was added successfully`
 })
 
 

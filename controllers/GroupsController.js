@@ -1,5 +1,9 @@
 const uuid4 = require("uuid4")
 
+
+
+
+
 GroupsController = {
   upsertGroup: async ({ groupName, ctx }) => {
     console.log('DatabaseController::insertNewGroup called: ', groupName)
@@ -25,6 +29,29 @@ GroupsController = {
     }
 
     return group
+  },
+
+
+  findAllGroups: async ({ ctx }) => {
+    const allGroups = await ctx.db.collection('group').find()
+
+    if (!allGroups) {
+      throw new Error(`We don't have any registered groups`)
+    }
+
+    const allGroupsArray = await allGroups.toArray()
+    const groupsForRender = await Promise.all(allGroupsArray.map(async (group) => {
+      return await GroupsController.addInstanceCountToGroup(group, ctx)
+    }))
+
+    return groupsForRender.filter(_ => _)
+  },
+
+
+  addInstanceCountToGroup: async (group, ctx) => {
+    const instancesCount = await InstancesController.findInstancesCountByGroupId({ groupId: group._id, ctx })
+    group.instances = instancesCount
+    if (instancesCount > 0) return group
   },
 
 }

@@ -1,4 +1,3 @@
-const GroupsController = require('../controllers/GroupsController')
 
 
 
@@ -47,6 +46,32 @@ InstancesController = {
   removeInstance: async ({ instanceId, ctx }) => {
     const deletionResult = await ctx.db.collection('instances').deleteOne({ _id: instanceId })
     console.log('Deleted instances count: ', deletionResult.deletedCount)
+  },
+
+
+  findInstancesCountByGroupId: async ({ groupId, ctx }) => {
+    const instance = await ctx.db.collection('instances').find({ groupId })
+    if (!instance) {
+      throw new Error(`Instance with groupId ${groupId} was not found`)
+    }
+
+    return instance.count()
+  },
+
+
+  findInstancesByGroupName: async ({ groupName, ctx }) => {
+    const group = await GroupsController.findGroupByName({ groupName, ctx })
+    const instances = await ctx.db.collection('instances').find({ groupId: group._id })
+    if (!instances) {
+      throw new Error(`Instances for group ${groupName} not found`)
+    }
+    const fetchedInstances = await instances.toArray()
+    const instancesForRender = await Promise.all(fetchedInstances.map(async (instance) => {
+      instance.group = group.name
+      return instance
+    }))
+
+    return instancesForRender
   },
 }
 
