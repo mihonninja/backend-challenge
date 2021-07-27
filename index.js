@@ -1,9 +1,11 @@
 require('dotenv').config()
 
+
 const DatabaseController = require('./database/DatabaseController')
 const Koa = require('koa')
 const router = require('./routes/index')
 const bodyParser = require('koa-bodyparser')
+require('./jobs/index')
 
 const app = new Koa()
 
@@ -16,5 +18,7 @@ app
   .use((ctx, next) => {
     ctx.db === ctx.mongo.db(process.env.DB_NAME)
     ctx.body = ctx.request.body
+
   })
-  .listen(process.env.APP_PORT)
+
+app.listen(process.env.APP_PORT)
