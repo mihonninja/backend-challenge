@@ -5,8 +5,12 @@
 InstancesController = {
   upsertInstance: async ({ groupName, instanceId, meta, ctx }) => {
     console.log('DatabaseController::insertNewInstance called: ', groupName, instanceId, meta)
-
     const group = await GroupsController.findGroupByName({ groupName, ctx })
+    const instanceBeforeUpdate = await InstancesController.findInstanceById({ instanceId, ctx })
+    if (instanceBeforeUpdate && instanceBeforeUpdate.groupId !== group._id) {
+      throw new Error(`Instance with this _id ${instanceId} already created for another group`)
+    }
+
     const query = { _id: instanceId }
     const updatedAt = new Date().valueOf()
     const update = {
