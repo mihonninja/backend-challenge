@@ -1,15 +1,25 @@
 {
   "name": "backend-challenge",
   "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "serve": "ts-node index.ts",
+    "start": "nodemon"
+  },
   "devDependencies": {
+    "@types/koa": "^2.13.4",
+    "@types/koa-bodyparser": "^4.3.2",
+    "@types/koa-router": "^7.4.4",
+    "@types/mongodb": "^4.0.7",
+    "@types/node": "^16.4.5",
     "dotenv": "^10.0.0",
     "koa": "^2.13.1",
-    "koa-router": "^10.0.0"
+    "koa-router": "^10.0.0",
+    "ts-node": "^10.1.0"
   },
   "dependencies": {
     "cron": "^1.8.2",
     "koa-bodyparser": "^4.3.0",
-    "koa-mongo": "^1.9.3",
     "uuid4": "^2.0.2"
   }
 }
