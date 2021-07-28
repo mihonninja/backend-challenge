@@ -1,5 +1,11 @@
 const uuid4 = require("uuid4")
-import { Context } from 'koa'
+
+// import GroupModel from '../models/group.model'
+
+import { Group } from '../models/group.model'
+import { GroupDto } from './dto'
+
+// import { Context } from 'koa'
 
 
 
@@ -31,30 +37,36 @@ const GroupsController = {
   //   return group
   // },
 
+  async findAllGroups (): Promise<GroupDto[]> {
+    const groups = await Group.find({})
+    console.log('groups found: ', groups)
 
-  findAllGroups: async (ctx: Context) => {
-    // console.log('ctx.db: ', ctx)
-    const allGroups = await ctx.db.collection('group').find()
-
-    if (!allGroups) {
-      throw new Error(`We don't have any registered groups`)
-    }
-
-    const allGroupsArray = await allGroups.toArray()
-    const groupsForRender = await Promise.all(allGroupsArray.map(async (group: Object) => {
-      return await GroupsController.addInstanceCountToGroup(group, ctx)
-    }))
-
-    return groupsForRender.filter(_ => _)
+    return groups
   },
 
 
-  addInstanceCountToGroup: async (group: Object, ctx: Context) => {
-    // const instancesCount = await InstancesController.findInstancesCountByGroupId({ groupId: group._id, ctx })
-    // group.instances = instancesCount
-    const instancesCount = 10
-    if (instancesCount > 0) return group
-  },
+  // findAllGroups: async (ctx: Context) => {
+  //   const allGroups = await ctx.db.collection('group').find()
+
+  //   if (!allGroups) {
+  //     throw new Error(`We don't have any registered groups`)
+  //   }
+
+  //   const allGroupsArray = await allGroups.toArray()
+  //   const groupsForRender = await Promise.all(allGroupsArray.map(async (group: Object) => {
+  //     return await GroupsController.addInstanceCountToGroup(group, ctx)
+  //   }))
+
+  //   return groupsForRender.filter(_ => _)
+  // },
+
+
+  // addInstanceCountToGroup: async (group: Object, ctx: Context) => {
+  //   // const instancesCount = await InstancesController.findInstancesCountByGroupId({ groupId: group._id, ctx })
+  //   // group.instances = instancesCount
+  //   const instancesCount = 10
+  //   if (instancesCount > 0) return group
+  // },
 
 }
 

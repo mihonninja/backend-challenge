@@ -2,9 +2,7 @@ import { Context } from 'koa'
 import Router from 'koa-router'
 const router: Router = new Router();
 import GroupsController from '../controllers/GroupsController'
-import {KoaContext} from './@types/koa-extensions';
 // const InstancesController = require('../controllers/InstancesController')
-
 
 
 
@@ -12,8 +10,7 @@ router.get('/', async (ctx: Context) => {
   console.log('process.env.APP_PORT: ', process.env.APP_PORT)
   console.log('GET / called ')
 
-  const groups = await GroupsController.findAllGroups(ctx)
-
+  const groups = await GroupsController.findAllGroups()
   ctx.body = groups
   ctx.status = 200
 })
