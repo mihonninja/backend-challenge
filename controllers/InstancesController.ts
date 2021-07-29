@@ -12,7 +12,7 @@ const InstancesController = {
 
 
   async findInstancesByGroupId(groupId: string): Promise<IInstance[]> {
-    return await Instance.find({ groupId: groupId }, {}, {sort: {updatedAt: 1}})
+    return await Instance.find({ groupId: groupId }, {}, {sort: {updatedAt: -1}})
   },
 
 
@@ -38,7 +38,7 @@ const InstancesController = {
   },
 
 
-  async upsertInstance (groupName:string, instanceId:string, meta:string): Promise<InstanceDTO|object> {
+  async upsertInstance (groupName:string, instanceId:string, meta:object): Promise<InstanceDTO|object> {
     console.log('DatabaseController::insertNewInstance called: ', groupName, instanceId, meta)
     const group = await GroupsController.findGroupByName(groupName)
 
@@ -47,7 +47,7 @@ const InstancesController = {
     const updatedAt = new Date().valueOf()
     const update = {
       updatedAt,
-      meta: meta ? meta : '',
+      meta: meta ? meta : {},
 
       $setOnInsert: {
         createdAt: new Date().valueOf(),

@@ -4,5 +4,5 @@ export interface InstanceDTO {
     group: string
     createdAt: number
     updatedAt: number
-    meta: string
+    meta: object
   }

@@ -18,11 +18,12 @@ const GroupsController = {
   },
 
 
-  async findAllGroups (): Promise<GroupDTO[]> {
+  async findAllGroups (): Promise<(GroupDTO|null)[]> {
     const groups = await Group.find({})
 
     const preparedGroups = await Promise.all(groups.map(async (group) => {
       const count = await InstancesController.findInstancesCountByGroupId(group._id)
+      if (count <= 0) return null
 
       const lastUpdatedAt = await InstancesController.findLastUpdatedAtForGroup(group._id)
       const newGroup = {
@@ -35,8 +36,12 @@ const GroupsController = {
       return newGroup
     }))
 
-    return preparedGroups
+    const filteredGroups = preparedGroups.filter(_ => _)
+
+    return filteredGroups
   },
+
+
 
 
   async createGroup (createGroupDto: CreateGroupDTO) {
