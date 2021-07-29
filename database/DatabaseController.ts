@@ -9,7 +9,8 @@ const DatabaseController = {
     console.log('url: ', url)
     const options = {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useCreateIndex: true,
+      useUnifiedTopology: true,
     }
 
     db.on('close', () => console.log('Database connection closed.'))

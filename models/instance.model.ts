@@ -23,7 +23,10 @@ const instanceSchema = new Schema(
   {
     timestamps: { currentTime: Date.now }
   }
+
 )
+
+instanceSchema.index({ groupName: 1, _id: 1, groupId: 1 }, { unique: true })
 
 
 const Instance: Model<IInstance> = model('Instance', instanceSchema);

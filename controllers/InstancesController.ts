@@ -39,10 +39,7 @@ const InstancesController = {
 
 
   async upsertInstance (groupName:string, instanceId:string, meta:object): Promise<InstanceDTO|object> {
-    console.log('DatabaseController::insertNewInstance called: ', groupName, instanceId, meta)
     const group = await GroupsController.findGroupByName(groupName)
-
-
     const query = { _id: instanceId, groupId: group._id }
     const updatedAt = new Date().valueOf()
     const update = {
@@ -94,6 +91,19 @@ const InstancesController = {
   async removeInstance(instanceId:string): Promise<void>{
     Instance.deleteOne({ _id: instanceId })
   },
+
+
+  async removeExpiredInstances() {
+    console.log('removeExpiredInstances job started');
+    const secondsToCount = parseInt(process.env.INSTANCE_AGED_AFTER_SECONDS || '10')
+
+    const now = Date.now()
+    const agedUnixtime = now - (secondsToCount * 1000)
+    const query = { updatedAt: { $lte: agedUnixtime } }
+    const { deletedCount } = await Instance.deleteMany(query)
+    console.log(`removed instances amount: ${deletedCount}`)
+    console.log('removeExpiredInstances job finished')
+  }
 }
 
 export default InstancesController

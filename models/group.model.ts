@@ -19,6 +19,8 @@ const groupSchema = new Schema(
   }
 )
 
+groupSchema.index({ name: 1, _id: 1 }, { unique: true })
+
 const Group: Model<IGroup> = model('Group', groupSchema);
 
 export { Group }

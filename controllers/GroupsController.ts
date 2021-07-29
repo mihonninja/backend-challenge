@@ -1,5 +1,3 @@
-const uuid4 = require("uuid4")
-
 import { IGroup, Group } from '../models/group.model'
 import { GroupDTO, CreateGroupDTO } from './dto'
 import InstancesController from './InstancesController'
