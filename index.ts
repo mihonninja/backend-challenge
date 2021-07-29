@@ -2,16 +2,14 @@ import Koa from 'koa'
 require('dotenv').config()
 import DatabaseController from './database/DatabaseController'
 const router = require('./routes/index')
-const bodyParser = require('koa-bodyparser')
+import bodyParser from 'koa-bodyparser'
 // require('./jobs/index')
 
 const app: Koa = new Koa()
 
 
-app
-  .use(bodyParser())
-  .use(router.routes())
-  .use(router.allowedMethods())
+app.use(bodyParser())
+app.use(router.routes()).use(router.allowedMethods())
 
 
 

@@ -2,7 +2,7 @@ import { Context } from 'koa'
 import Router from 'koa-router'
 const router: Router = new Router();
 import GroupsController from '../controllers/GroupsController'
-const InstancesController = require('../controllers/InstancesController')
+import InstancesController from '../controllers/InstancesController'
 const uuid4 = require("uuid4")
 
 
@@ -18,43 +18,42 @@ router.get('/', async (ctx: Context) => {
 })
 
 
-// router.get('/:group', async (ctx: Context) => {
-//   const { params: { group } } = ctx
-//   console.log('GET /:group called ', group)
+router.get('/:group', async (ctx: Context) => {
+  const { params: { group } } = ctx
+  console.log('GET /:group called ', group)
 
-//   const instances = await InstancesController.findInstancesByGroupName({ groupName: group, ctx })
+  const instances = await InstancesController.findInstancesByGroupName(group)
 
-//   ctx.body = instances
-//   ctx.status = 200
-// })
-
-
-// router.post('/:group/:id', async (ctx: Context) => {
-//   const { params, request: { body: meta } } = ctx
-//   console.log('POST /:group/:id route called with params: ', params)
-
-//   const instance = await InstancesController.upsertInstance({ groupName: params.group, instanceId: params.id, meta, ctx })
-
-//   ctx.body = instance
-//   ctx.status = 200
-// })
+  ctx.body = instances
+  ctx.status = 200
+})
 
 
-// router.delete('/:group/:id', async (ctx: Context) => {
-//   const { params } = ctx
-//   console.log('DELETE /:group/:id route called with params: ', params)
+router.post('/:group/:id', async (ctx: Context) => {
+  const { params, request } = ctx
+  console.log('POST /:group/:id route called with params: ', params)
 
-//   await InstancesController.removeInstance({ instanceId: params.id, ctx })
+  const meta = JSON.parse(JSON.stringify(request.body)).meta
+  const instance = await InstancesController.upsertInstance(params.group, params.id, meta)
 
-//   ctx.status = 200
-// })
+  ctx.body = instance
+  ctx.status = 200
+})
+
+
+router.delete('/:group/:id', async (ctx: Context) => {
+  const { params } = ctx
+  console.log('DELETE /:group/:id route called with params: ', params)
+
+  await InstancesController.removeInstance(params.id)
+
+  ctx.status = 200
+})
 
 
 router.post('/:group', async (ctx: Context) => {
   const { params } = ctx
   console.log('/:group route called with params:', params)
-
-  // await GroupsController.upsertGroup({ groupName: params.group, ctx })
 
   const group = {
     _id: uuid4(),

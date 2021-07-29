@@ -1,5 +1,5 @@
 
-export interface CreateGroupDto {
+export interface CreateGroupDTO {
   _id: string
   name: string
 }

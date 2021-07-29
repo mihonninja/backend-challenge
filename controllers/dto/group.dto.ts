@@ -1,5 +1,5 @@
 
-export interface GroupDto {
+export interface GroupDTO {
   id: string
   name: string
   instances: number

@@ -3,7 +3,6 @@ import { Schema, Document, Model, model } from 'mongoose'
 export interface IGroup extends Document {
   _id: string
   name: string
-  instances: number
   updatedAt: number
   createdAt: number
 }

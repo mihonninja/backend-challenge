@@ -1,8 +1,10 @@
 
-import { GroupDto } from './group.dto';
-import { CreateGroupDto } from './createGroup.dto';
+import { GroupDTO } from './group.dto';
+import { CreateGroupDTO } from './createGroup.dto';
+import { InstanceDTO } from './instance.dto';
 
 export {
-  GroupDto,
-  CreateGroupDto
+  GroupDTO,
+  CreateGroupDTO,
+  InstanceDTO,
 }
