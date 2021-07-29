@@ -42,7 +42,7 @@ const GroupsController = {
 
 
 
-  async createGroup (createGroupDto: CreateGroupDTO) {
+  async createGroup (createGroupDto: CreateGroupDTO): void {
     await Group.create(createGroupDto)
   },
 }

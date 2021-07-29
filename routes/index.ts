@@ -3,7 +3,7 @@ import Router from 'koa-router'
 const router: Router = new Router();
 import GroupsController from '../controllers/GroupsController'
 import InstancesController from '../controllers/InstancesController'
-const uuid4 = require("uuid4")
+import { v4 as uuid4 } from 'uuid'
 
 
 

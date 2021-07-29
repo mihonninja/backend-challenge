@@ -1,9 +1,11 @@
 import Koa from 'koa'
-require('dotenv').config()
+import dotenv from 'dotenv'
 import DatabaseController from './database/DatabaseController'
-const router = require('./routes/index')
+import router from './routes/index'
 import bodyParser from 'koa-bodyparser'
-require('./jobs/index')
+// require('./jobs/index')
+
+dotenv.config()
 
 const app: Koa = new Koa()
 

@@ -1,6 +1,6 @@
 import InstancesController from "../controllers/InstancesController";
 
-const CronJob = require('cron').CronJob;
+import { CronJob } from 'cron';
 
 
 const job = new CronJob(

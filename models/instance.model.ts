@@ -8,7 +8,7 @@ export interface IInstance extends Document {
   groupName: string
   updatedAt: number
   createdAt: number
-  meta: object
+  meta: Record<string, unknown>
 }
 
 const instanceSchema = new Schema(

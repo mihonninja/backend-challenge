@@ -38,7 +38,7 @@ const InstancesController = {
   },
 
 
-  async upsertInstance (groupName:string, instanceId:string, meta:object): Promise<InstanceDTO|object> {
+  async upsertInstance (groupName:string, instanceId:string, meta:Record<string, unknown>): Promise<InstanceDTO|Record<string, unknown>> {
     const group = await GroupsController.findGroupByName(groupName)
     const query = { _id: instanceId, groupId: group._id }
     const updatedAt = new Date().valueOf()
@@ -71,7 +71,7 @@ const InstancesController = {
   },
 
 
-  async findInstanceById (instanceId:string):Promise<IInstance | null> {
+  async findInstanceById (instanceId:string): Promise<IInstance | null> {
     const instance = Instance.findOne({ _id: instanceId })
     if (!instance) {
       throw new Error(`Instance with _id ${instanceId} was not found`)
@@ -81,7 +81,7 @@ const InstancesController = {
   },
 
 
-  async findLastUpdatedAtForGroup(groupId:string):Promise<number> {
+  async findLastUpdatedAtForGroup(groupId:string): Promise<number> {
     const instances = await InstancesController.findInstancesByGroupId(groupId)
     if (!instances || instances.length <= 0) return 0
     return instances[0].updatedAt
@@ -93,7 +93,7 @@ const InstancesController = {
   },
 
 
-  async removeExpiredInstances() {
+  async removeExpiredInstances(): Promise<void> {
     console.log('removeExpiredInstances job started');
     const secondsToCount = parseInt(process.env.INSTANCE_AGED_AFTER_SECONDS || '10')
 
