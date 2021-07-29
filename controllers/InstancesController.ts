@@ -1,8 +1,24 @@
+import { Instance } from '../models/instance.model'
+// import { GroupDto, CreateGroupDto } from './dto'
+
+
+
+const InstancesController = {
+  async findInstancesCountByGroupId (groupId: string): Promise<number> {
+    const instancesCount = Instance.countDocuments({ groupId })
+    return instancesCount
+  }
+
+
+  // findInstancesCountByGroupId: async (groupId: string) => {
+  //   const instancesCount = Instance.countDocuments({ groupId })
+  //   return instancesCount
+  // },
 
 
 
 
-// InstancesController = {
+
 //   upsertInstance: async ({ groupName, instanceId, meta, ctx }) => {
 //     console.log('DatabaseController::insertNewInstance called: ', groupName, instanceId, meta)
 //     const group = await GroupsController.findGroupByName({ groupName, ctx })
@@ -77,6 +93,8 @@
 
 //     return instancesForRender
 //   },
-// }
+}
+
+export default InstancesController
 
 // module.exports = InstancesController

@@ -2,7 +2,8 @@ import { Context } from 'koa'
 import Router from 'koa-router'
 const router: Router = new Router();
 import GroupsController from '../controllers/GroupsController'
-// const InstancesController = require('../controllers/InstancesController')
+const InstancesController = require('../controllers/InstancesController')
+const uuid4 = require("uuid4")
 
 
 
@@ -11,6 +12,7 @@ router.get('/', async (ctx: Context) => {
   console.log('GET / called ')
 
   const groups = await GroupsController.findAllGroups()
+
   ctx.body = groups
   ctx.status = 200
 })
@@ -48,13 +50,20 @@ router.get('/', async (ctx: Context) => {
 // })
 
 
-// router.post('/:group', async (ctx: Context) => {
-//   const { params } = ctx
-//   console.log('/:group route called with params:', params)
+router.post('/:group', async (ctx: Context) => {
+  const { params } = ctx
+  console.log('/:group route called with params:', params)
 
-//   await GroupsController.upsertGroup({ groupName: params.group, ctx })
-//   ctx.body = `Group with name ${params.group} was added successfully`
-// })
+  // await GroupsController.upsertGroup({ groupName: params.group, ctx })
+
+  const group = {
+    _id: uuid4(),
+    name: params.group
+  }
+  await GroupsController.createGroup(group)
+
+  ctx.body = `Group with name ${params.group} was added successfully`
+})
 
 
 

@@ -1,7 +1,8 @@
 
 export interface GroupDto {
-  _id: string
+  id: string
   name: string
+  instances: number
   createdAt: number
-  updatedAt: number
+  lastUpdatedAt: number
 }

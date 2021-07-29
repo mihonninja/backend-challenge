@@ -1,11 +1,8 @@
 const uuid4 = require("uuid4")
 
-// import GroupModel from '../models/group.model'
-
-import { Group } from '../models/group.model'
-import { GroupDto } from './dto'
-
-// import { Context } from 'koa'
+import { IGroup, Group } from '../models/group.model'
+import { GroupDto, CreateGroupDto } from './dto'
+import InstancesController from './InstancesController'
 
 
 
@@ -39,11 +36,26 @@ const GroupsController = {
 
   async findAllGroups (): Promise<GroupDto[]> {
     const groups = await Group.find({})
-    console.log('groups found: ', groups)
 
-    return groups
+    const preparedGroups = await Promise.all(groups.map(async (group) => {
+      const count = await InstancesController.findInstancesCountByGroupId(group._id)
+      const newGroup = {
+        id: group._id,
+        name: group.name,
+        createdAt: group.createdAt,
+        instances: count,
+        lastUpdatedAt: group.updatedAt
+      }
+      return newGroup
+    }))
+
+    return preparedGroups
   },
 
+
+  async createGroup (createGroupDto: CreateGroupDto) {
+    await Group.create(createGroupDto)
+  },
 
   // findAllGroups: async (ctx: Context) => {
   //   const allGroups = await ctx.db.collection('group').find()
