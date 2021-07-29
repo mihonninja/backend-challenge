@@ -1,12 +1,16 @@
 {
   "name": "backend-challenge",
   "version": "1.0.0",
+
   "scripts": {
     "build": "tsc",
     "serve": "ts-node index.ts",
     "start": "nodemon",
     "lint": "eslint . --ext .ts",
-    "lint-fix": "eslint . --ext .ts --fix"
+    "lint-fix": "eslint . --ext .ts --fix",
+
+    "test": "NODE_ENV=test jest",
+    "test:api": "npm test -- tests/api"
   },
   "devDependencies": {
     "@types/koa": "^2.13.4",
@@ -19,16 +23,23 @@
     "@typescript-eslint/parser": "^4.28.5",
     "dotenv": "^10.0.0",
     "eslint": "^7.31.0",
+    "jest": "^27.0.6",
     "koa": "^2.13.1",
     "koa-router": "^10.0.0",
+    "supertest": "^6.1.4",
+    "ts-jest": "^27.0.4",
     "ts-node": "^10.1.0"
   },
   "dependencies": {
     "@types/cron": "^1.7.3",
+    "@types/mocha": "^9.0.0",
     "@types/uuid": "^8.3.1",
     "cron": "^1.8.2",
+    "jest-extended": "^0.11.5",
+    "jest-junit": "^12.2.0",
     "koa-bodyparser": "^4.3.0",
     "mongoose": "^5.13.3",
     "uuid4": "^2.0.2"
   }
+
 }

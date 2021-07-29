@@ -6,7 +6,7 @@ import InstancesController from './InstancesController'
 
 
 const GroupsController = {
-  async findGroupByName(groupName: string): Promise<IGroup> {
+  async findGroupByName (groupName: string): Promise<IGroup> {
     const group = await Group.findOne({ name: groupName })
     if (!group) {
       throw new Error(`Group with name ${groupName} was not found`)
@@ -40,9 +40,7 @@ const GroupsController = {
   },
 
 
-
-
-  async createGroup (createGroupDto: CreateGroupDTO): void {
+  async createGroup (createGroupDto: CreateGroupDTO): Promise<void> {
     await Group.create(createGroupDto)
   },
 }

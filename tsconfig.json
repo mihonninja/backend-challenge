@@ -9,6 +9,8 @@
     "outDir": "build",
     "sourceMap": true,
     "esModuleInterop": true,
+    "typeRoots": ["node_modules/@types"],
   },
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules", "**/*.spec.ts"],
+
 }

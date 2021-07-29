@@ -32,11 +32,10 @@ router.get('/:group', async (ctx: Context) => {
 router.post('/:group/:id', async (ctx: Context) => {
   const { params, request } = ctx
   console.log('POST /:group/:id route called with params: ', params)
-  console.log('request.body: ', typeof(request.body))
-
 
   const meta = JSON.parse(JSON.stringify(request.body)).meta
-  const instance = await InstancesController.upsertInstance(params.group, params.id, JSON.parse(meta))
+  const objectMeta = meta ? JSON.parse(meta) : {}
+  const instance = await InstancesController.upsertInstance(params.group, params.id, objectMeta)
 
   ctx.body = instance
   ctx.status = 200
