@@ -8,12 +8,15 @@ import { v4 as uuid4 } from 'uuid'
 
 
 router.get('/', async (ctx: Context) => {
-  console.log('process.env.APP_PORT: ', process.env.APP_PORT)
   console.log('GET / called ')
 
-  const groups = await GroupsController.findAllGroups()
+  try {
+    const groups = await GroupsController.findAllGroups()
+    ctx.body = groups
+  } catch(e) {
+    ctx.body = { errorMessage: e.message }
+  }
 
-  ctx.body = groups
   ctx.status = 200
 })
 
@@ -22,31 +25,45 @@ router.get('/:group', async (ctx: Context) => {
   const { params: { group } } = ctx
   console.log('GET /:group called ', group)
 
-  const instances = await InstancesController.findInstancesByGroupName(group)
+  try {
+    const instances = await InstancesController.findInstancesByGroupName(group)
+    ctx.body = instances
+  } catch(e) {
+    ctx.body = { errorMessage: e.message }
+  }
 
-  ctx.body = instances
   ctx.status = 200
 })
 
 
 router.post('/:group/:id', async (ctx: Context) => {
   const { params, request } = ctx
-  console.log('POST /:group/:id route called with params: ', params)
+  console.log('POST /:group/:id called ', params)
 
-  const meta = JSON.parse(JSON.stringify(request.body)).meta
-  const objectMeta = meta ? JSON.parse(meta) : {}
-  const instance = await InstancesController.upsertInstance(params.group, params.id, objectMeta)
+  try {
+    const requestBody = JSON.parse(JSON.stringify(request.body))
+    const objectMeta = requestBody.meta ? JSON.parse(requestBody.meta) : {}
+    const instance = await InstancesController.upsertInstance(params.group, params.id, objectMeta)
 
-  ctx.body = instance
+    ctx.body = instance
+  } catch(e) {
+    ctx.body = { errorMessage: e.message }
+  }
+
   ctx.status = 200
 })
 
 
 router.delete('/:group/:id', async (ctx: Context) => {
   const { params } = ctx
-  console.log('DELETE /:group/:id route called with params: ', params)
+  console.log('DELETE /:group/:id called ', params)
 
-  await InstancesController.removeInstance(params.id)
+  try {
+    await InstancesController.removeInstance(params.id)
+    ctx.body = {}
+  } catch(e) {
+    ctx.body = { errorMessage: e.message }
+  }
 
   ctx.status = 200
 })
@@ -54,15 +71,21 @@ router.delete('/:group/:id', async (ctx: Context) => {
 
 router.post('/:group', async (ctx: Context) => {
   const { params } = ctx
-  console.log('/:group route called with params:', params)
+  console.log('/:group route called ', params)
 
   const group = {
     _id: uuid4(),
     name: params.group
   }
-  await GroupsController.createGroup(group)
 
-  ctx.body = `Group with name ${params.group} was added successfully`
+  try {
+    await GroupsController.createGroup(group)
+    ctx.body = {}
+  } catch(e) {
+    ctx.body = { errorMessage: e.message }
+  }
+
+  ctx.status = 200
 })
 
 
