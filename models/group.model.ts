@@ -1,11 +1,15 @@
 import { Schema, Document, Model, model } from 'mongoose'
 
+
+
+
 export interface IGroup extends Document {
   _id: string
   name: string
   updatedAt: number
   createdAt: number
 }
+
 
 const groupSchema = new Schema(
   {
@@ -19,8 +23,11 @@ const groupSchema = new Schema(
   }
 )
 
+
 groupSchema.index({ name: 1, _id: 1 }, { unique: true })
 
-const Group: Model<IGroup> = model('Group', groupSchema);
+
+const Group: Model<IGroup> = model('Group', groupSchema)
+
 
 export { Group }

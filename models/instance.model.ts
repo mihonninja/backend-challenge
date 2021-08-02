@@ -2,6 +2,7 @@ import { Schema, Document, Model, model } from 'mongoose'
 
 
 
+
 export interface IInstance extends Document {
   _id: string
   groupId: string
@@ -10,6 +11,7 @@ export interface IInstance extends Document {
   createdAt: number
   meta: Record<string, unknown>
 }
+
 
 const instanceSchema = new Schema(
   {
@@ -23,12 +25,13 @@ const instanceSchema = new Schema(
   {
     timestamps: { currentTime: Date.now }
   }
-
 )
+
 
 instanceSchema.index({ groupName: 1, _id: 1, groupId: 1 }, { unique: true })
 
 
-const Instance: Model<IInstance> = model('Instance', instanceSchema);
+const Instance: Model<IInstance> = model('Instance', instanceSchema)
+
 
 export { Instance }

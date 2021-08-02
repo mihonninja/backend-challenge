@@ -1,9 +1,10 @@
 import { Context } from 'koa'
 import Router from 'koa-router'
-const router: Router = new Router();
+const router: Router = new Router()
 import GroupsController from '../controllers/GroupsController'
 import InstancesController from '../controllers/InstancesController'
 import { v4 as uuid4 } from 'uuid'
+
 
 
 
@@ -71,7 +72,7 @@ router.delete('/:group/:id', async (ctx: Context) => {
 
 router.post('/:group', async (ctx: Context) => {
   const { params } = ctx
-  console.log('/:group route called ', params)
+  console.log('POST /:group called ', params)
 
   const group = {
     _id: uuid4(),
@@ -87,8 +88,6 @@ router.post('/:group', async (ctx: Context) => {
 
   ctx.status = 200
 })
-
-
 
 
 export = router

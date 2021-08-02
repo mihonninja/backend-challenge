@@ -1,4 +1,4 @@
-import InstancesController from "../controllers/InstancesController";
+import InstancesController from '../controllers/InstancesController'
 
 import { CronJob } from 'cron';
 
@@ -12,5 +12,6 @@ const job = new CronJob(
   true,
   'America/Los_Angeles'
 )
+
 
 job.start()

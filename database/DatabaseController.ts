@@ -6,7 +6,7 @@ import { connect, connection as db } from 'mongoose'
 const DatabaseController = {
   init (): void {
     const url = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
-    console.log('url: ', url)
+    console.log('Database url: ', url)
     const options = {
       useNewUrlParser: true,
       useCreateIndex: true,

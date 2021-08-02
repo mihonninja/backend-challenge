@@ -4,6 +4,7 @@ import GroupsController from './GroupsController'
 
 
 
+
 const InstancesController = {
   async findInstancesCountByGroupId (groupId: string): Promise<number> {
     const instancesCount = Instance.countDocuments({ groupId })
@@ -94,7 +95,7 @@ const InstancesController = {
 
 
   async removeExpiredInstances(): Promise<void> {
-    console.log('removeExpiredInstances job started');
+    console.log('removeExpiredInstances job started')
     const secondsToCount = parseInt(process.env.INSTANCE_AGED_AFTER_SECONDS || '10')
 
     const now = Date.now()
@@ -105,5 +106,6 @@ const InstancesController = {
     console.log('removeExpiredInstances job finished')
   }
 }
+
 
 export default InstancesController
