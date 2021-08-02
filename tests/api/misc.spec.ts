@@ -109,7 +109,7 @@ describe("POST /:group", () => {
     const result = await request(app.callback())
       .post("/groupName")
 
-    expect(result.text).toEqual(`Group with name ${group.name} was added successfully`)
+    expect(result.text).toEqual(`{}`)
     expect(result.statusCode).toEqual(200)
   })
 })
